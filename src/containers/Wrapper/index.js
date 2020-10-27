@@ -51,8 +51,14 @@ const Wrapper = ({ children }) => {
           </Menu.Item>
         </Menu>
       </Header>
-      <Content {...layout}>{children}</Content>
-      <Footer {...footerLayout}>Ant Design ©2018 Created by Ant UED</Footer>
+
+      <Content {...layout}>
+        <div>{children}</div>
+      </Content>
+
+      <Footer {...footerLayout}>
+        NextJs React Example ©2020 Created by Andres Ulises
+      </Footer>
     </Layout>
   );
 };

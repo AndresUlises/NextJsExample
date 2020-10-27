@@ -21,12 +21,14 @@ const tailLayout = {
 
 const Login = () => {
   const router = useRouter();
-  const [username, setUsername] = useState(0);
-  const [password, setPassword] = useState(0);
+  const [state, setState] = useState({});
 
-  const changeState = (changed, all) => {
-    setUsername(all.username);
-    setPassword(all.password);
+  const changeState = (changed) => {
+    console.log(state);
+    setState({
+      ...state,
+      [Object.keys(changed)]: changed,
+    });
   };
 
   return (
@@ -75,14 +77,11 @@ const Login = () => {
             <Button type="primary" htmlType="submit">
               Ingresar
             </Button>
-            <Button
-              onClick={(e) => {
-                e.preventDefaultL;
-                router.push("/register");
-              }}
-              htmlType="button"
-            >
+            <Button onClick={(e)=> {e.preventDefault; router.push("/register")}} htmlType="button">
               Registrarse
+            </Button>
+            <Button onClick={(e)=> {e.preventDefault; router.push("/recordar-contrasena")}} htmlType="button" danger>
+              Olvide Mi Contraseña
             </Button>
           </Space>
         </Form.Item>

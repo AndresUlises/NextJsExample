@@ -3,7 +3,6 @@ import { Form, Input, DatePicker, Button, notification } from "antd";
 import { Typography, Space } from "antd";
 import { useRouter } from "next/router";
 
-
 const { Title } = Typography;
 const layout = {
   labelCol: {
@@ -22,15 +21,12 @@ const tailLayout = {
 
 const Register = () => {
   const router = useRouter();
-  const [name, setName] = useState(0);
-  const [lastname, setLastname] = useState(0);
-  const [birthday, setBirthday] = useState(0);
-  const [email, setEmail] = useState(0);
+  const [state, setState] = useState({ name: {}, lastname: {}, email: {} });
   let description;
 
   useEffect(() => {
-    description = `Bienvenido ${name} ${lastname}, 
-    tu cuenta fue registrada con éxito Email: ${email}`;
+    description = `Bienvenido ${state.name.name} ${state.lastname.lastname}, 
+    tu cuenta fue registrada con éxito Email: ${state.email.email}`;
   });
 
   const notify = () => {
@@ -40,16 +36,17 @@ const Register = () => {
     });
   };
 
-  const changeState = (changed, all) => {
-    setName(all.name);
-    setLastname(all.lastname);
-    setBirthday(all.birthday);
-    setEmail(all.email);
+  const changeState = (changed) => {
+    setState({
+      ...state,
+      [Object.keys(changed)]: changed,
+    });
+    console.log(state);
   };
 
   return (
     <>
-      <Title style={{textAlign: 'center'}}>Registrarse</Title>
+      <Title style={{ textAlign: "center" }}>Registrarse</Title>
       <Form
         {...layout}
         name="register"
@@ -107,12 +104,21 @@ const Register = () => {
             </Button>
             <Button
               onClick={(e) => {
-                e.preventDefaultL;
+                e.preventDefault;
                 router.push("/login");
               }}
               htmlType="button"
             >
               Ingresar
+            </Button>
+            <Button
+              type="dashed"
+              onClick={(e) => {
+                e.preventDefault;
+                router.push("/terminos-condiciones");
+              }}
+            >
+              Terminos y Condiciones
             </Button>
           </Space>
         </Form.Item>
