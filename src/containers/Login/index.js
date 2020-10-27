@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox} from "antd";
+import { Form, Input, Button, Checkbox } from "antd";
 import { Typography, Space } from "antd";
 import { useRouter } from "next/router";
 
