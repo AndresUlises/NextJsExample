@@ -1,0 +1,1 @@
+export const REGISTER_USER_DATA = 'REGISTER_USER_DATA'

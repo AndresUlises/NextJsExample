@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import React from "react";
+import { Form, Input, Button } from "antd";
 import { Typography, Space } from "antd";
-import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoginAction } from "../../redux/actions/login";
 
 const { Title } = Typography;
 const layout = {
@@ -20,15 +21,13 @@ const tailLayout = {
 };
 
 const Login = () => {
-  const router = useRouter();
-  const [state, setState] = useState({});
+  const loginSelector = useSelector((state) => state.login);
+  console.log(loginSelector);
 
-  const changeState = (changed) => {
-    console.log(state);
-    setState({
-      ...state,
-      [Object.keys(changed)]: changed,
-    });
+  const dispatch = useDispatch();
+
+  const onFinish = (values) => {
+    dispatch(setLoginAction(values));
   };
 
   return (
@@ -40,11 +39,11 @@ const Login = () => {
         initialValues={{
           remember: true,
         }}
-        onValuesChange={changeState}
+        onFinish={onFinish}
       >
         <Form.Item
-          label="Nombre de Usuario"
-          name="username"
+          label="Correo Electrónico"
+          name="email"
           rules={[
             {
               required: true,
@@ -68,20 +67,10 @@ const Login = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-          <Checkbox>Mantener iniciada la sesión</Checkbox>
-        </Form.Item>
-
         <Form.Item {...tailLayout}>
           <Space>
             <Button type="primary" htmlType="submit">
               Ingresar
-            </Button>
-            <Button onClick={(e)=> {e.preventDefault; router.push("/register")}} htmlType="button">
-              Registrarse
-            </Button>
-            <Button onClick={(e)=> {e.preventDefault; router.push("/recordar-contrasena")}} htmlType="button" danger>
-              Olvide Mi Contraseña
             </Button>
           </Space>
         </Form.Item>

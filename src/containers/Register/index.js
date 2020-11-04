@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Form, Input, DatePicker, Button, notification } from "antd";
 import { Typography, Space } from "antd";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { setRegisterAction } from "../../redux/actions/register";
 
 const { Title } = Typography;
+
 const layout = {
   labelCol: {
     span: 8,
@@ -21,41 +24,30 @@ const tailLayout = {
 
 const Register = () => {
   const router = useRouter();
-  const [state, setState] = useState({ name: {}, lastname: {}, email: {} });
-  let description;
 
-  useEffect(() => {
-    description = `Bienvenido ${state.name.name} ${state.lastname.lastname}, 
-    tu cuenta fue registrada con éxito Email: ${state.email.email}`;
-  });
+  const registerSelector = useSelector((state) => state.register);
+  console.log(registerSelector);
 
-  const notify = () => {
+  const dispatch = useDispatch();
+
+  const { form } = Form.useForm();
+
+  const notify = (values) => {
     notification["success"]({
       message: "Registro exitoso",
-      description: description,
+      description: `Bienvenido ${values.name} ${values.lastname}`,
     });
   };
 
-  const changeState = (changed) => {
-    setState({
-      ...state,
-      [Object.keys(changed)]: changed,
-    });
-    console.log(state);
+  const onFinish = (values) => {
+    dispatch(setRegisterAction(values));
+    notify(values);
   };
 
   return (
     <>
       <Title style={{ textAlign: "center" }}>Registrarse</Title>
-      <Form
-        {...layout}
-        name="register"
-        initialValues={{
-          remember: true,
-        }}
-        onValuesChange={changeState}
-        onFinish={notify}
-      >
+      <Form {...layout} form={form} name="register" onFinish={onFinish}>
         <Form.Item
           label="Nombres"
           name="name"
